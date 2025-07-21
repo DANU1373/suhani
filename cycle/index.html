@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Happy Birthday DANU & Hey Suhani</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://fonts.googleapis.com/css?family=Russo+One" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- Base Setup --- */
+        html {
+            height: 100%;
+            overflow: hidden;
+        }
+
+        /* Combined CSS from both files */
+        body {
+            margin: 0;
+            height: 100vh;
+            /* --- BACKGROUND CHANGE: Set to solid black for starfield --- */
+            background-color: #000;
+            font-family: 'Segoe UI', sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            overflow: hidden;
+            position: relative;
+            text-align: center;
+        }
+
+        /* --- BACKGROUND: Canvas for stars --- */
+        #star-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* --- z-index ensures it's behind all other content --- */
+            z-index: 0;
+        }
+
+        /* Styles for password-section, suhani-section, third-section */
+        .container {
+            position: relative;
+            /* --- z-index ensures content is above the background canvas --- */
+            z-index: 1;
+            width: 100%;
+            max-width: 800px;
+            animation: fadeIn 1.2s ease;
+        }
+
+        #password-section {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 50px 30px;
+            border-radius: 20px;
+            border: 2px solid gold;
+            box-shadow: 0 0 40px rgba(255, 215, 0, 0.5);
+            max-width: 600px;
+            margin: auto;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1, .welcome {
+            font-size: 3em;
+            margin-bottom: 10px;
+            color: gold;
+        }
+
+        p, .typing-line {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            color: #eee;
+        }
+
+        .password-inputs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .char-box {
+            width: 60px;
+            height: 70px;
+            font-size: 2em;
+            text-align: center;
+            border: 2px solid #ccc;
+            border-radius: 12px;
+            background-color: #222;
+            color: white;
+            transition: all 0.3s ease;
+            outline: none;
+            box-shadow: inset 0 0 12px rgba(255, 215, 0, 0.3);
+        }
+
+        .char-box.correct {
+            border-color: #4CAF50;
+            background-color: #2e7d32;
+            color: #fff;
+        }
+
+        .char-box.incorrect {
+            border-color: #FF4C4C;
+            background-color: #5a1e1e;
+        }
+
+        .char-box:focus {
+            transform: scale(1.05);
+            border-color: gold;
+            box-shadow: 0 0 12px gold;
+        }
+
+        #message {
+            margin-top: 25px;
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #FF6B6B;
+        }
+
+        #message.correct {
+            color: gold;
+        }
+
+        .typing-line {
+            white-space: pre-wrap;
+            overflow: hidden;
+            min-height: 1.4em;
+            animation: fadeTyping 0.4s ease forwards;
+        }
+
+        @keyframes fadeTyping {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .buttons {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            opacity: 0;
+            animation: fadeInButtons 1s ease forwards;
+            animation-delay: 7s;
+        }
+
+        @keyframes fadeInButtons {
+            to { opacity: 1; transform: translateY(0); }
+            from { opacity: 0; transform: translateY(20px); }
+        }
+
+        .btn {
+            padding: 12px 24px;
+            font-size: 1em;
+            border: 2px solid gold;
+            border-radius: 12px;
+            background-color: transparent;
+            color: gold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: gold;
+            color: #111;
+        }
+
+        /* THIRD PAGE */
+        #third-section .typing-line {
+            font-size: 1.8em; /* Increased from 1.6em */
+            min-height: 2em;
+        }
+
+        /* Adjusted font sizes for Suhani Section */
+        #suhani-section .welcome {
+            font-size: 3.5em; /* Slightly larger than default 3em */
+        }
+
+        #suhani-section .typing-line {
+            font-size: 1.5em; /* Increased from 1.2em */
+        }
+
+        #third-section .highlight {
+            color: gold;
+            font-weight: bold;
+        }
+
+        #third-section .buttons {
+            margin-top: 40px;
+            gap: 30px;
+            animation-delay: 3s;
+        }
+
+        /* Styles from page4.html.txt */
+        .switch-wrapper {
+            z-index: 2;
+            text-align: center;
+            margin-top: 60px;
+        }
+
+        .switch-label {
+            font-size: 1.3em;
+            color: gold;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 100px;
+            height: 50px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #444;
+            transition: 0.4s;
+            border-radius: 50px;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 40px;
+            width: 40px;
+            left: 5px;
+            bottom: 5px;
+            background-color: gold;
+            transition: 0.4s;
+            border-radius: 50%;
+            box-shadow: 0 0 12px gold;
+        }
+
+        input:checked + .slider {
+            background-color: #222;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(50px);
+            background-color: #ff4081;
+            box-shadow: 0 0 16px #ff4081;
+        }
+
+        .counter {
+            margin-top: 80px;
+            text-align: center;
+            z-index: 5;
+            display: none;
+        }
+
+        .nums {
+            color: #ffffff;
+            font-size: 100px;
+            position: relative;
+            overflow: hidden;
+            width: 300px;
+            height: 100px;
+            margin: 0 auto;
+        }
+
+        .nums span {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(120deg);
+            transform-origin: bottom center;
+        }
+
+        .nums span.in {
+            transform: translate(-50%, -50%) rotate(0deg);
+            animation: goIn 0.5s ease-in-out;
+        }
+
+        .nums span.out {
+            animation: goOut 0.5s ease-in-out;
+        }
+
+        @keyframes goIn {
+            0% { transform: translate(-50%, -50%) rotate(120deg); }
+            30% { transform: translate(-50%, -50%) rotate(-20deg); }
+            60% { transform: translate(-50%, -50%) rotate(10deg); }
+            100% { transform: translate(-50%, -50%) rotate(0deg); }
+        }
+
+        @keyframes goOut {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            60% { transform: translate(-50%, -50%) rotate(20deg); }
+            100% { transform: translate(-50%, -50%) rotate(-120deg); }
+        }
+
+        /* NEW SVG Text Styling */
+        .handwritten-text-container {
+            position: relative; /* Needed for absolute positioning of canvas */
+            width: 100%;
+            max-width: 1200px;
+            height: 360px; /* Ensure enough space for the text */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden; /* Hide overflow during animation */
+            z-index: 2; /* Above background, below sparkle canvas */
+            /* Initially hidden, will be revealed by JS */
+            display: none; /* Hide until activated by JS */
+        }
+
+        .handwritten-text-container svg {
+            width: 100%;
+            height: 100%;
+            font-family: 'Dancing Script', cursive; /* Use the handwritten font */
+            text-transform: capitalize; /* Capitalize for a natural look */
+            font-weight: 700; /* Bold variant for better stroke visibility */
+        }
+
+        .handwritten-text-container text {
+            fill: transparent; /* Start with transparent fill */
+            stroke: gold; /* Stroke color for drawing */
+            stroke-width: 2.5px; /* Thicker stroke for visibility */
+            stroke-dasharray: 1000; /* Needs to be long enough to cover text path */
+            stroke-dashoffset: 1000; /* Start fully offset (hidden) for drawing effect */
+
+            /* Initial state for the new entrance effect */
+            opacity: 0;
+            transform: scale(0.8) translateY(20px);
+            filter: blur(5px);
+
+            /* Combined animations: initial-reveal -> draw-text -> text-fill + subtle breathing */
+            animation:
+                initial-reveal 1s ease-out forwards, /* New entrance: fade, scale, unblur */
+                draw-text 4s linear forwards 1s, /* Drawing animation starts after initial-reveal */
+                text-fill 0.5s linear forwards 4.5s, /* Fill after drawing */
+                text-breathing 5s ease-in-out infinite 5s; /* Subtle breathing after fill */
+
+            /* Static text shadow for definition, replacing the pulsing glow */
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5),
+                         0 0 20px rgba(255, 215, 0, 0.3);
+        }
+
+        /* Responsive font size adjustments for new SVG text */
+        .handwritten-text-container text {
+            font-size: 100px; /* Base font size */
+        }
+
+        @media (max-width: 1024px) {
+            .handwritten-text-container text {
+                font-size: 85px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .handwritten-text-container text {
+                font-size: 70px;
+                stroke-width: 2px;
+            }
+            .handwritten-text-container {
+                height: 280px; /* Adjust height for smaller text */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .handwritten-text-container text {
+                font-size: 55px;
+                stroke-width: 1.5px;
+            }
+            .handwritten-text-container {
+                height: 220px; /* Adjust height for smaller text */
+            }
+        }
+
+        /* Keyframes for the new initial reveal animation */
+        @keyframes initial-reveal {
+            0% {
+                opacity: 0;
+                transform: scale(0.8) translateY(20px);
+                filter: blur(5px);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+                filter: blur(0px);
+            }
+        }
+
+        /* Keyframes for drawing the text (stroke-dashoffset) */
+        @keyframes draw-text {
+            from {
+                stroke-dashoffset: 1000; /* Start fully offset */
+            }
+            to {
+                stroke-dashoffset: 0; /* Draw the text */
+            }
+        }
+
+        /* Keyframes for filling the text with color */
+        @keyframes text-fill {
+            from {
+                fill: transparent;
+            }
+            to {
+                fill: gold; /* Fill color after drawing */
+            }
+        }
+
+        /* Keyframes for subtle text breathing */
+        @keyframes text-breathing {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.005); /* Very subtle scale up */
+            }
+        }
+
+
+        .heart-container {
+            display: none;
+            margin-top: -40px; /* MODIFIED: Adjusted for new heart size */
+            z-index: 5;
+            position: relative;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .heart {
+            width: 60px; /* MODIFIED: Reduced from 80px */
+            height: 60px; /* MODIFIED: Reduced from 80px */
+            background-color: #ff4d6d;
+            transform: rotate(-45deg);
+            animation: heartbeat 1.2s infinite;
+            box-shadow: 0 0 20px rgba(255, 77, 109, 0.6);
+            position: relative;
+            margin: 0 auto;
+        }
+
+        .heart::before,
+        .heart::after {
+            content: "";
+            position: absolute;
+            width: 60px; /* MODIFIED: Reduced from 80px */
+            height: 60px; /* MODIFIED: Reduced from 80px */
+            background-color: #ff4d6d;
+            border-radius: 50%;
+        }
+
+        .heart::before {
+            top: -30px; /* MODIFIED: Adjusted for new size (half of 60px) */
+            left: 0;
+        }
+
+        .heart::after {
+            top: 0;
+            left: 30px; /* MODIFIED: Adjusted for new size (half of 60px) */
+        }
+
+        @keyframes heartbeat {
+            0% { transform: scale(1) rotate(-45deg); }
+            30% { transform: scale(1.2) rotate(-45deg); }
+            60% { transform: scale(1.05) rotate(-45deg); }
+            100% { transform: scale(1) rotate(-45deg); }
+        }
+
+        /* Canvas for Sparkle Particles (New) */
+        #sparkleCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1; /* Below text, above background */
+            pointer-events: none; /* Allow clicks to pass through */
+            display: none; /* Initially hidden, will be revealed by JS */
+        }
+
+        canvas#fireworks {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1; /* Keep fireworks below main content, but above body background glow */
+            pointer-events: none; /* Will be enabled via JS when active */
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="birthday-music" src="file.mp3" loop></audio>
+
+    <canvas id="star-canvas"></canvas>
+
+    <canvas id="fireworks"></canvas>
+
+    <div class="container" id="password-section">
+        <h1>Welcome</h1>
+        <p>To proceed further, enter the password</p>
+        <div class="password-inputs">
+            <input type="text" maxlength="1" class="char-box" id="box1" oninput="checkChar(this, 'box2', 0)">
+            <input type="text" maxlength="1" class="char-box" id="box2" oninput="checkChar(this, 'box3', 1)">
+            <input type="text" maxlength="1" class="char-box" id="box3" oninput="checkChar(this, 'box4', 2)">
+            <input type="text" maxlength="1" class="char-box" id="box4" oninput="checkChar(this, null, 3)">
+        </div>
+        <div id="message"></div>
+    </div>
+
+    <div class="container hidden" id="suhani-section">
+        <div class="welcome">Hey Suhani</div>
+        <div class="typing-line" id="line1"></div>
+        <div class="typing-line" id="line2"></div>
+        <div class="buttons" id="buttons">
+            <button class="btn" onclick="goToThirdPage()">Yes</button>
+            <button class="btn" onclick="goToPreviousPage('suhani-section', 'password-section')">No</button>
+        </div>
+    </div>
+
+    <div class="container hidden" id="third-section">
+        <div class="typing-line" id="third-line"></div>
+        <div class="buttons" id="third-buttons">
+            <button class="btn" onclick="showDanuBirthday()">Yes</button>
+            <button class="btn" onclick="goToPreviousPage('third-section', 'suhani-section')">No</button>
+        </div>
+    </div>
+
+    <div class="switch-wrapper hidden" id="danu-switch-wrapper">
+        <span class="switch-label">Turn on the magic ✨</span>
+        <label class="switch">
+            <input type="checkbox" id="toggleSwitch">
+            <span class="slider"></span>
+        </label>
+    </div>
+
+    <div class="counter hidden" id="counter">
+        <div class="nums" id="nums">
+            <span class="in">10</span>
+            <span>9</span>
+            <span>8</span>
+            <span>7</span>
+            <span>6</span>
+            <span>5</span>
+            <span>4</span>
+            <span>3</span>
+            <span>2</span>
+            <span>1</span>
+            <span>0</span>
+        </div>
+        <h4>Get Ready</h4>
+    </div>
+
+    <div class="handwritten-text-container" id="handwrittenSvgText">
+        <svg viewBox="0 0 1320 300">
+            <text x="50%" y="50%" dy=".35em" text-anchor="middle">
+                Happy Birthday DANU
+            </text>
+        </svg>
+    </div>
+
+    <div class="heart-container hidden" id="heartContainer">
+        <div class="heart"></div>
+    </div>
+
+    <canvas id="sparkleCanvas"></canvas>
+
+
+    <script>
+        // --- BACKGROUND SCRIPT: Starfield Animation ---
+        const starCanvas = document.getElementById('star-canvas');
+        const starCtx = starCanvas.getContext('2d');
+        const STAR_COUNT = 800;
+        const STAR_COLOR = 'rgba(255, 255, 255, 0.9)';
+        const STAR_MIN_RADIUS = 0.5;
+        const STAR_MAX_RADIUS = 2.0;
+        let stars = [];
+
+        function random(min, max) {
+            return Math.random() * (max - min) + min;
+        }
+
+        function createStar() {
+            return {
+                x: random(0, starCanvas.width),
+                y: random(0, starCanvas.height),
+                radius: random(STAR_MIN_RADIUS, STAR_MAX_RADIUS),
+                alpha: random(0.1, 1),
+                alphaChange: random(0.005, 0.015) * (Math.random() > 0.5 ? 1 : -1),
+                vx: random(-0.1, 0.1),
+                vy: random(-0.1, 0.1)
+            };
+        }
+
+        function initializeStars() {
+            starCanvas.width = window.innerWidth;
+            starCanvas.height = window.innerHeight;
+            stars = [];
+            for (let i = 0; i < STAR_COUNT; i++) {
+                stars.push(createStar());
+            }
+        }
+
+        function animateStars() {
+            starCtx.clearRect(0, 0, starCanvas.width, starCanvas.height);
+            starCtx.fillStyle = STAR_COLOR;
+            stars.forEach(star => {
+                star.x += star.vx;
+                star.y += star.vy;
+                star.alpha += star.alphaChange;
+                if (star.alpha <= 0.1 || star.alpha >= 1) {
+                    star.alphaChange *= -1;
+                }
+                if (star.x < 0) star.x = starCanvas.width;
+                if (star.x > starCanvas.width) star.x = 0;
+                if (star.y < 0) star.y = starCanvas.height;
+                if (star.y > starCanvas.height) star.y = 0;
+                starCtx.globalAlpha = star.alpha;
+                starCtx.beginPath();
+                starCtx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+                starCtx.fill();
+            });
+            requestAnimationFrame(animateStars);
+        }
+        window.addEventListener('resize', initializeStars);
+        initializeStars();
+        animateStars();
+
+
+        // --- MAIN PROJECT SCRIPT ---
+        const correctPassword = ['D', 'G', 'N', 'S'];
+        let countdownAbortController = new AbortController(); // FIX: Controller to abort listeners
+
+        function checkChar(current, nextId, index) {
+            const value = current.value.toUpperCase();
+            current.value = value;
+            if (value === '') {
+                current.classList.remove('correct', 'incorrect');
+            } else if (value === correctPassword[index]) {
+                current.classList.add('correct');
+                current.classList.remove('incorrect');
+            } else {
+                current.classList.add('incorrect');
+                current.classList.remove('correct');
+            }
+            if (nextId && value) {
+                document.getElementById(nextId).focus();
+            }
+            checkFullPassword();
+        }
+
+        function checkFullPassword() {
+            const boxes = [
+                document.getElementById("box1").value.toUpperCase(),
+                document.getElementById("box2").value.toUpperCase(),
+                document.getElementById("box3").value.toUpperCase(),
+                document.getElementById("box4").value.toUpperCase()
+            ];
+            const message = document.getElementById("message");
+            if (boxes.join('') === correctPassword.join('')) {
+                message.classList.add("correct");
+                message.textContent = "Password is correct ✔️";
+                setTimeout(() => {
+                    document.getElementById("password-section").classList.add("hidden");
+                    document.getElementById("suhani-section").classList.remove("hidden");
+                    startTypingSuhani();
+                }, 1000);
+            } else {
+                message.classList.remove("correct");
+                message.textContent = "";
+            }
+        }
+
+        function typeText(text, elementId, callback) {
+            const el = document.getElementById(elementId);
+            el.textContent = "";
+            let i = 0;
+            function type() {
+                if (i < text.length) {
+                    el.textContent += text.charAt(i);
+                    i++;
+                    setTimeout(type, 40 + Math.random() * 30);
+                } else if (callback) {
+                    callback();
+                }
+            }
+            type();
+        }
+
+        function startTypingSuhani() {
+            setTimeout(() => {
+                typeText("Caution: This site may make you feel happy.", 'line1', () => {
+                    setTimeout(() => {
+                        typeText("Do you want to move further?", 'line2', () => {
+                            document.getElementById("buttons").style.animationPlayState = "running";
+                        });
+                    }, 700);
+                });
+            }, 1000);
+        }
+
+        function goToThirdPage() {
+            document.getElementById("suhani-section").classList.add("hidden");
+            document.getElementById("third-section").classList.remove("hidden");
+            startTypingNisha();
+        }
+
+        function showDanuBirthday() {
+            document.getElementById("third-section").classList.add("hidden");
+            document.getElementById("danu-switch-wrapper").classList.remove("hidden");
+        }
+
+        function startTypingNisha() {
+            const line1Text = "<span class='highlight'>Nisha</span>, do you really want to continue?";
+            const container = document.getElementById("third-line");
+            container.innerHTML = "";
+            let i = 0, tag = false, current = "";
+            function type() {
+                if (i < line1Text.length) {
+                    let char = line1Text[i];
+                    current += char;
+                    if (char === "<") tag = true;
+                    if (char === ">") tag = false;
+                    container.innerHTML = current;
+                    i++;
+                    setTimeout(type, tag ? 0 : 45 + Math.random() * 20);
+                } else {
+                    document.getElementById("third-buttons").style.animationPlayState = "running";
+                }
+            }
+            type();
+        }
+        
+        function stopMusic() {
+            const music = document.getElementById('birthday-music');
+            if (music) {
+                music.pause();
+                music.currentTime = 0;
+            }
+        }
+
+        function goToPreviousPage(currentPageId, previousPageId) {
+            document.getElementById(currentPageId).classList.add("hidden");
+            document.getElementById(previousPageId).classList.remove("hidden");
+            if (previousPageId === 'suhani-section') {
+                startTypingSuhani();
+            }
+            if (currentPageId === 'danu-switch-wrapper' || currentPageId === 'counter' || currentPageId === 'handwrittenSvgText' || currentPageId === 'heartContainer') {
+                countdownAbortController.abort();
+                stopFireworks();
+                resetCounter();
+                stopSparkleEffect();
+                stopMusic(); 
+            }
+        }
+
+        const switchInput = document.getElementById("toggleSwitch");
+        const counter = document.getElementById("counter");
+        const handwrittenSvgText = document.getElementById("handwrittenSvgText");
+        const heartContainer = document.getElementById("heartContainer");
+
+        function resetCounter() {
+            counter.style.display = "none";
+            handwrittenSvgText.style.display = "none";
+            heartContainer.style.display = "none";
+            sparkleCanvas.style.display = "none";
+            const nums = document.querySelectorAll(".nums span");
+            nums.forEach(num => num.className = "");
+            if (nums.length > 0) {
+                nums[0].classList.add("in");
+            }
+        }
+
+        function runCountdown() {
+            countdownAbortController.abort();
+            countdownAbortController = new AbortController();
+
+            counter.style.display = "block";
+            const nums = document.querySelectorAll(".nums span");
+            nums.forEach((num, idx) => {
+                const last = nums.length - 1;
+                num.addEventListener("animationend", (e) => {
+                    if (e.animationName === "goIn" && idx !== last) {
+                        num.classList.remove("in");
+                        num.classList.add("out");
+                    } else if (e.animationName === "goOut" && num.nextElementSibling) {
+                        num.nextElementSibling.classList.add("in");
+                    } else if (idx === last && e.animationName === "goIn") {
+                        counter.style.display = "none";
+                        handwrittenSvgText.style.display = "flex";
+                        sparkleCanvas.style.display = "block";
+                        startSparkleEffect();
+                        setTimeout(() => {
+                            heartContainer.style.display = "block";
+                            startFireworks();
+                            // Tell the already-primed music to play
+                            const music = document.getElementById('birthday-music');
+                            if (music) {
+                                music.play();
+                            }
+                        }, 800);
+                    }
+                }, { signal: countdownAbortController.signal });
+            });
+        }
+
+        switchInput.addEventListener("change", () => {
+            if (switchInput.checked) {
+                // ** THIS IS THE KEY FIX **
+                // Prime the audio on user click
+                const music = document.getElementById('birthday-music');
+                if (music) {
+                    music.play().then(() => {
+                        music.pause(); // Immediately pause it
+                        music.currentTime = 0;
+                    }).catch(error => {
+                        console.error("Audio priming failed:", error);
+                    });
+                }
+                
+                resetCounter();
+                runCountdown();
+            } else {
+                countdownAbortController.abort();
+                resetCounter();
+                stopFireworks();
+                stopSparkleEffect();
+                stopMusic();
+            }
+        });
+
+        // --- FIREWORK ANIMATION SCRIPT ---
+        const fireworksCanvas = document.getElementById('fireworks');
+        const fireworksCtx = fireworksCanvas.getContext('2d');
+        fireworksCanvas.width = window.innerWidth;
+        fireworksCanvas.height = window.innerHeight;
+
+        const GRAVITY = 0.03;
+        const PARTICLE_FRICTION = 0.99;
+        const AUTO_LAUNCH_PROBABILITY = 0.04;
+
+        let fireworks = [];
+        let particles = [];
+        let animationRunning = false;
+        let hasFiredInitialBlast = false;
+
+        class Firework {
+            constructor(startX, startY, targetX, targetY, hue, explosionType) {
+                this.x = startX; this.y = startY;
+                this.targetX = targetX; this.targetY = targetY;
+                this.hue = hue; this.explosionType = explosionType;
+                this.angle = Math.atan2(targetY - startY, targetX - startX);
+                this.speed = 2; this.acceleration = 1.02;
+                this.brightness = random(50, 70);
+                this.trail = []; this.trailLength = 5;
+            }
+            update() {
+                if (this.x < 0 || this.x > fireworksCanvas.width || this.y > fireworksCanvas.height || this.y < 0) return true;
+                this.speed *= this.acceleration;
+                const vx = Math.cos(this.angle) * this.speed;
+                const vy = Math.sin(this.angle) * this.speed;
+                this.x += vx; this.y += vy;
+                const distanceToTarget = Math.sqrt(Math.pow(this.targetX - this.x, 2) + Math.pow(this.targetY - this.y, 2));
+                if (distanceToTarget < this.speed) {
+                    createExplosion(this.x, this.y, this.hue, this.explosionType);
+                    return true;
+                }
+                this.trail.push({ x: this.x, y: this.y });
+                while (this.trail.length > this.trailLength) this.trail.shift();
+                return false;
+            }
+            draw() {
+                fireworksCtx.beginPath();
+                if (this.trail.length > 1) {
+                    fireworksCtx.moveTo(this.trail[this.trail.length - 2].x, this.trail[this.trail.length - 2].y);
+                } else {
+                    fireworksCtx.moveTo(this.x - 1, this.y - 1);
+                }
+                fireworksCtx.lineTo(this.x, this.y);
+                fireworksCtx.lineWidth = 2;
+                fireworksCtx.strokeStyle = `hsl(${this.hue}, 100%, ${this.brightness}%)`;
+                fireworksCtx.stroke();
+            }
+        }
+
+        class Particle {
+            constructor(x, y, hue, settings) {
+                this.x = x; this.y = y;
+                this.hue = hue + random(-15, 15);
+                this.angle = settings.angle || random(0, Math.PI * 2);
+                this.speed = settings.speed || random(1, 5);
+                this.friction = PARTICLE_FRICTION;
+                this.gravity = GRAVITY;
+                this.decay = settings.decay || random(0.01, 0.02);
+                this.alpha = 1; this.isBright = Math.random() < 0.1;
+            }
+            update() {
+                this.speed *= this.friction;
+                this.x += Math.cos(this.angle) * this.speed;
+                this.y += Math.sin(this.angle) * this.speed + this.gravity;
+                this.alpha -= this.decay;
+                return this.alpha <= this.decay;
+            }
+            draw() {
+                fireworksCtx.beginPath();
+                fireworksCtx.moveTo(this.x, this.y);
+                fireworksCtx.lineTo(this.x - Math.cos(this.angle) * this.speed * 2, this.y - (Math.sin(this.angle) * this.speed + this.gravity) * 2);
+                fireworksCtx.lineWidth = random(1, 3);
+                const lightness = this.isBright ? random(75, 100) : random(50, 60);
+                fireworksCtx.strokeStyle = `hsla(${this.hue}, 100%, ${lightness}%, ${this.alpha})`;
+                fireworksCtx.stroke();
+            }
+        }
+
+        function createExplosion(x, y, hue, type) {
+            let particleCount;
+            switch (type) {
+                case 'grand_finale':
+                    particleCount = 400;
+                    for (let i = 0; i < particleCount; i++) {
+                        const settings = { speed: random(1, 7), decay: random(0.01, 0.018) };
+                        particles.push(new Particle(x, y, hue, settings));
+                    }
+                    break;
+                default:
+                    particleCount = 100;
+                    for (let i = 0; i < particleCount; i++) {
+                        particles.push(new Particle(x, y, hue, {}));
+                    }
+            }
+        }
+        
+        function launchFirework(targetX, targetY, type) {
+            const startX = fireworksCanvas.width / 2;
+            const startY = fireworksCanvas.height;
+            const fireColorHue = random(0, 360);
+            fireworks.push(new Firework(startX, startY, targetX, targetY, fireColorHue, type));
+        }
+
+        function animateFireworks() {
+            if (!animationRunning) return;
+            requestAnimationFrame(animateFireworks);
+            fireworksCtx.globalCompositeOperation = 'destination-out';
+            fireworksCtx.fillStyle = 'rgba(0, 0, 0, 0.4)';
+            fireworksCtx.fillRect(0, 0, fireworksCanvas.width, fireworksCanvas.height);
+            fireworksCtx.globalCompositeOperation = 'lighter';
+            if (hasFiredInitialBlast && Math.random() < AUTO_LAUNCH_PROBABILITY) {
+                launchFirework(random(fireworksCanvas.width * 0.2, fireworksCanvas.width * 0.8), random(0, fireworksCanvas.height / 2));
+            }
+            for (let i = fireworks.length - 1; i >= 0; i--) {
+                if (fireworks[i].update()) { fireworks.splice(i, 1); } else { fireworks[i].draw(); }
+            }
+            for (let i = particles.length - 1; i >= 0; i--) {
+                if (particles[i].update()) { particles.splice(i, 1); } else { particles[i].draw(); }
+            }
+        }
+        
+        function startFireworks() {
+            if (animationRunning) return;
+            animationRunning = true;
+            fireworksCanvas.style.pointerEvents = 'auto';
+            setTimeout(() => {
+                launchFirework(fireworksCanvas.width / 2, fireworksCanvas.height / 4, 'grand_finale');
+                hasFiredInitialBlast = true;
+            }, 500);
+            animateFireworks();
+        }
+
+        function stopFireworks() {
+            animationRunning = false;
+            hasFiredInitialBlast = false;
+            fireworks = [];
+            particles = [];
+            fireworksCanvas.style.pointerEvents = 'none';
+            fireworksCtx.clearRect(0, 0, fireworksCanvas.width, fireworksCanvas.height);
+        }
+
+        fireworksCanvas.addEventListener('click', (e) => {
+            if (animationRunning) { launchFirework(e.clientX, e.clientY); }
+        });
+        
+        // --- SPARKLE EFFECT SCRIPT ---
+        const textElement = document.querySelector('.handwritten-text-container text');
+        const sparkleCanvas = document.getElementById('sparkleCanvas');
+        const sparkleCtx = sparkleCanvas.getContext('2d');
+        sparkleCanvas.width = window.innerWidth;
+        sparkleCanvas.height = window.innerHeight;
+
+        window.addEventListener('resize', () => {
+            sparkleCanvas.width = window.innerWidth;
+            sparkleCanvas.height = window.innerHeight;
+            fireworksCanvas.width = window.innerWidth;
+            fireworksCanvas.height = window.innerHeight;
+        });
+
+        class SparkleParticle {
+            constructor(x, y, color, shape = 'circle') {
+                this.x = x; this.y = y; this.color = color; this.shape = shape;
+                this.radius = Math.random() * 1.5 + 0.5;
+                this.size = Math.random() * 2 + 1;
+                this.velocity = { x: (Math.random() - 0.5) * 2, y: (Math.random() - 0.5) * 2 - 1 };
+                this.alpha = 1; this.decay = 0.01 + Math.random() * 0.005;
+                this.rotation = Math.random() * Math.PI * 2;
+                this.rotationSpeed = (Math.random() - 0.5) * 0.1;
+            }
+            draw() {
+                sparkleCtx.save();
+                sparkleCtx.globalAlpha = this.alpha;
+                sparkleCtx.fillStyle = this.color;
+                if (this.shape === 'circle') {
+                    sparkleCtx.beginPath();
+                    sparkleCtx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                    sparkleCtx.fill();
+                } else {
+                    sparkleCtx.translate(this.x, this.y);
+                    sparkleCtx.rotate(this.rotation);
+                    sparkleCtx.fillRect(-this.size / 2, -this.size / 2, this.size, this.size);
+                }
+                sparkleCtx.restore();
+            }
+            update() {
+                this.x += this.velocity.x;
+                this.y += this.velocity.y;
+                this.alpha -= this.decay;
+                if (this.alpha < 0) this.alpha = 0;
+                if (this.shape === 'square') this.rotation += this.rotationSpeed;
+            }
+        }
+
+        let sparkles = [];
+        let sparkleAnimationId;
+        let isSparkling = false;
+
+        function animateSparkles() {
+            if (!isSparkling) {
+                cancelAnimationFrame(sparkleAnimationId);
+                return;
+            }
+            sparkleAnimationId = requestAnimationFrame(animateSparkles);
+            sparkleCtx.clearRect(0, 0, sparkleCanvas.width, sparkleCanvas.height);
+            const textComputedStyle = getComputedStyle(textElement);
+            const textOpacity = parseFloat(textComputedStyle.opacity);
+            if (textOpacity > 0.1) {
+                if (Math.random() < 0.5) {
+                    const textRect = textElement.getBoundingClientRect();
+                    const randomX = textRect.left + Math.random() * textRect.width;
+                    const randomY = textRect.top + Math.random() * textRect.height;
+                    const colors = [ 'rgba(255, 215, 0, 0.8)', 'rgba(255, 255, 255, 0.7)', 'rgba(255, 165, 0, 0.9)', 'rgba(255, 192, 203, 0.6)', 'rgba(173, 216, 230, 0.7)' ];
+                    const randomColor = colors[Math.floor(Math.random() * colors.length)];
+                    const randomShape = Math.random() > 0.5 ? 'circle' : 'square';
+                    sparkles.push(new SparkleParticle(randomX, randomY, randomColor, randomShape));
+                }
+            }
+            for (let i = sparkles.length - 1; i >= 0; i--) {
+                const sparkle = sparkles[i];
+                sparkle.update();
+                sparkle.draw();
+                if (sparkle.alpha <= 0) sparkles.splice(i, 1);
+            }
+        }
+
+        function startSparkleEffect() {
+            if (isSparkling) return;
+            isSparkling = true;
+            animateSparkles();
+        }
+
+        function stopSparkleEffect() {
+            isSparkling = false;
+            cancelAnimationFrame(sparkleAnimationId);
+            sparkleCtx.clearRect(0, 0, sparkleCanvas.width, sparkleCanvas.height);
+            sparkles = [];
+        }
+
+        textElement.addEventListener('animationstart', (event) => {
+            if (event.animationName === 'initial-reveal') {
+                sparkleCanvas.style.display = 'block';
+                startSparkleEffect();
+            }
+        });
+    </script>
+</body>
+</html>
